@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Você</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* --- MANTENDO O MESMO ESTILO DA PÁGINA DE LOGIN --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Mesmo fundo gradiente */
+            background: linear-gradient(135deg, #1a1a1d 0%, #2c3e50 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            padding: 20px;
+            /* Um pequeno padding para telas menores */
+        }
+
+        /* Container principal com efeito de vidro (Reaproveitado) */
+        .surprise-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px;
+            /* Padding ligeiramente ajustado para o conteúdo */
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 450px;
+            /* Um pouco mais largo para a imagem ficar bonita */
+            text-align: center;
+            animation: fadeIn 2s ease-in-out;
+            /* Animação um pouco mais lenta e suave aqui */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- ESTILOS ESPECÍFICOS DESSA PÁGINA --- */
+
+        /* Estilo da Imagem */
+        .gift-image-container {
+            width: 60%;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            margin-bottom: 25px;
+        }
+
+        .gift-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            /* Um filtro sutil para garantir que a imagem case com o fundo escuro */
+            filter: brightness(0.9) contrast(1.1);
+            transition: transform 0.5s ease;
+        }
+
+        /* Um efeito sutil se ela passar o mouse na imagem */
+        .gift-image-container:hover .gift-image {
+            transform: scale(1.03);
+        }
+
+        /* Estilo da Frase */
+        .message {
+            font-family: 'Cinzel', serif;
+            color: #e1e8ed;
+            /* Um tom quase branco, prateado */
+            font-size: 22px;
+            line-height: 1.4;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animação de entrada (Mesma do login) */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="surprise-card">
+        <div class="gift-image-container">
+            <img src="https://icons.iconarchive.com/icons/miniartx/gifts-2/256/rose-icon.png" alt="Flores e Chocolate"
+                class="gift-image">
+        </div>
+
+        <p class="message">
+            Descansa, amanhã será um dia melhor.
+        </p>
+    </div>
+
+</body>
+
+</html>

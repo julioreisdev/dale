@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Restrito</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Montserrat:wght@300;400&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* Reset básico e configurações de cor */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            /* Fundo gradiente misturando o Cinza Escuro com Azul Profundo */
+            background: linear-gradient(135deg, #1a1a1d 0%, #2c3e50 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+        }
+
+        /* Container principal com efeito de vidro (Glassmorphism) */
+        .login-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 350px;
+            text-align: center;
+            animation: fadeIn 1.5s ease-in-out;
+        }
+
+        /* Título elegante */
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #d1d8e0;
+            /* Cinza claro prateado */
+            margin-bottom: 30px;
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Estilização dos inputs */
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+            text-align: left;
+        }
+
+        .label-hint {
+            display: block;
+            color: #a4b0be;
+            /* Cinza azulado */
+            font-size: 12px;
+            margin-bottom: 8px;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            border: none;
+            border-bottom: 2px solid #4b6584;
+            /* Azul acinzentado */
+            color: #fff;
+            font-size: 16px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+            letter-spacing: 3px;
+            text-align: center;
+        }
+
+        input:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.4);
+            border-bottom: 2px solid #3498db;
+            /* Azul vibrante no foco */
+            box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
+        }
+
+        input::placeholder {
+            color: rgba(255, 255, 255, 0.2);
+            letter-spacing: 5px;
+        }
+
+        /* Botão estilizado */
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(to right, #2980b9, #2c3e50);
+            border: none;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 10px;
+            font-family: 'Cinzel', serif;
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+
+        /* Mensagem de erro */
+        #error-msg {
+            color: #ff6b6b;
+            font-size: 12px;
+            margin-top: 15px;
+            height: 15px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Animação de entrada */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Animação de erro (vibração) */
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            50% {
+                transform: translateX(10px);
+            }
+
+            75% {
+                transform: translateX(-10px);
+            }
+
+            100% {
+                transform: translateX(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-card" id="card">
+        <h1>Decifre-me</h1>
+
+        <div class="input-group">
+            <span class="label-hint">Dica: É qualquer coisa...</span>
+            <input type="text" id="username" placeholder="XXXX" maxlength="4" autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <span class="label-hint">Dica: É você...</span>
+            <input type="password" id="password" placeholder="XX" maxlength="2" autocomplete="off">
+        </div>
+
+        <button onclick="verificarAcesso()">Entrar</button>
+        <div id="error-msg">Acesso negado. Tente novamente.</div>
+    </div>
+
+    <script>
+        function verificarAcesso() {
+            // Pegando os valores
+            const user = document.getElementById('username').value.toUpperCase().trim();
+            const pass = document.getElementById('password').value.trim();
+            const errorMsg = document.getElementById('error-msg');
+            const card = document.getElementById('card');
+
+            // Lógica de verificação
+            // Usuário: DALE
+            // Senha: 01
+            if (user === 'DALE' && pass === '01') {
+                errorMsg.style.opacity = '0';
+
+                // Efeito visual antes de redirecionar
+                document.querySelector('button').innerHTML = "Acesso Permitido...";
+                document.querySelector('button').style.background = "#27ae60"; // Verde elegante
+
+                setTimeout(() => {
+                    // MUDAR O NOME ABAIXO PARA O SEU ARQUIVO DE DESTINO
+                    window.location.href = "surpresa.html";
+                }, 1000);
+
+            } else {
+                // Se errar
+                errorMsg.style.opacity = '1';
+                card.classList.add('shake');
+
+                // Remove a classe de animação para poder usar de novo
+                setTimeout(() => {
+                    card.classList.remove('shake');
+                }, 500);
+            }
+        }
+
+        // Permitir apertar Enter para enviar
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                verificarAcesso();
+            }
+        });
+    </script>
+</body>
+
+</html>
