@@ -41,7 +41,8 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
             width: 100%;
-            max-width: 350px;
+            max-width: 400px;
+            /* Aumentei um pouco pois a dica 1 ficou maior */
             text-align: center;
             animation: fadeIn 1.5s ease-in-out;
         }
@@ -50,7 +51,6 @@
         h1 {
             font-family: 'Cinzel', serif;
             color: #d1d8e0;
-            /* Cinza claro prateado */
             margin-bottom: 30px;
             font-size: 24px;
             letter-spacing: 2px;
@@ -67,7 +67,6 @@
         .label-hint {
             display: block;
             color: #a4b0be;
-            /* Cinza azulado */
             font-size: 12px;
             margin-bottom: 8px;
             font-style: italic;
@@ -80,7 +79,6 @@
             background: rgba(0, 0, 0, 0.2);
             border: none;
             border-bottom: 2px solid #4b6584;
-            /* Azul acinzentado */
             color: #fff;
             font-size: 16px;
             font-family: 'Montserrat', sans-serif;
@@ -94,7 +92,6 @@
             outline: none;
             background: rgba(0, 0, 0, 0.4);
             border-bottom: 2px solid #3498db;
-            /* Azul vibrante no foco */
             box-shadow: 0 0 10px rgba(52, 152, 219, 0.2);
         }
 
@@ -184,12 +181,12 @@
         <h1>Decifre-me</h1>
 
         <div class="input-group">
-            <span class="label-hint">Dica: É qualquer coisa...</span>
-            <input type="text" id="username" placeholder="XXXX" maxlength="4" autocomplete="off">
+            <span class="label-hint">Dica: Você queria muito lembrar, e eu sabia o tempo todo...</span>
+            <input type="text" id="username" placeholder="XXXXXXXXX" maxlength="9" autocomplete="off">
         </div>
 
         <div class="input-group">
-            <span class="label-hint">Dica: É você...</span>
+            <span class="label-hint">Dica: Você é...</span>
             <input type="password" id="password" placeholder="XX" maxlength="2" autocomplete="off">
         </div>
 
@@ -200,20 +197,24 @@
     <script>
         function verificarAcesso() {
             // Pegando os valores
-            const user = document.getElementById('username').value.toUpperCase().trim();
+            const rawUser = document.getElementById('username').value;
             const pass = document.getElementById('password').value.trim();
             const errorMsg = document.getElementById('error-msg');
             const card = document.getElementById('card');
 
+            // Normalizando o usuário para maiúsculo e removendo acentos para evitar erros simples
+            // Ex: "Charmosão" vira "CHARMOSAO", "Charmosao" vira "CHARMOSAO"
+            const userNormalized = rawUser.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toUpperCase().trim();
+
             // Lógica de verificação
-            // Usuário: DALE
-            // Senha: 01
-            if (user === 'DALE' && pass === '01') {
+            // Usuário deve ser: CHARMOSAO (derivado de charmosão)
+            // Senha deve ser: 01
+            if (userNormalized === 'CHARMOSAO' && pass === '01') {
                 errorMsg.style.opacity = '0';
 
                 // Efeito visual antes de redirecionar
                 document.querySelector('button').innerHTML = "Acesso Permitido...";
-                document.querySelector('button').style.background = "#27ae60"; // Verde elegante
+                document.querySelector('button').style.background = "#27ae60";
 
                 setTimeout(() => {
                     // MUDAR O NOME ABAIXO PARA O SEU ARQUIVO DE DESTINO

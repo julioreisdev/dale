@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Para Você</title>
+    <title>Escolha o Destino</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,86 +13,185 @@
         rel="stylesheet">
 
     <style>
-        /* --- MANTENDO O MESMO ESTILO DA PÁGINA DE LOGIN --- */
+        /* --- ESTILOS GERAIS --- */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            text-decoration: none;
         }
 
         body {
-            /* Mesmo fundo gradiente */
+            /* Fundo gradiente sensual e noturno */
             background: linear-gradient(135deg, #1a1a1d 0%, #2c3e50 100%);
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
             padding: 20px;
-            /* Um pequeno padding para telas menores */
         }
 
-        /* Container principal com efeito de vidro (Reaproveitado) */
-        .surprise-card {
+        h1 {
+            font-family: 'Cinzel', serif;
+            color: #d1d8e0;
+            margin-bottom: 30px;
+            font-size: 24px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* Container dos Cards */
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 1000px;
+            margin-bottom: 40px;
+            /* Espaço para a nova área de input */
+        }
+
+        /* Estilo do Card Individual */
+        .option-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
             -webkit-backdrop-filter: blur(15px);
-            padding: 30px;
-            /* Padding ligeiramente ajustado para o conteúdo */
-            border-radius: 20px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            padding: 30px 20px;
             width: 100%;
-            max-width: 450px;
-            /* Um pouco mais largo para a imagem ficar bonita */
+            max-width: 280px;
             text-align: center;
-            animation: fadeIn 2s ease-in-out;
-            /* Animação um pouco mais lenta e suave aqui */
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
+            animation: fadeInUp 1.5s ease-in-out;
         }
 
-        /* --- ESTILOS ESPECÍFICOS DESSA PÁGINA --- */
-
-        /* Estilo da Imagem */
-        .gift-image-container {
-            width: 60%;
-            border-radius: 15px;
-            overflow: hidden;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            margin-bottom: 25px;
+        .option-card:hover {
+            transform: translateY(-10px);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 40px rgba(52, 152, 219, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        .gift-image {
-            width: 100%;
-            height: auto;
+        .emoji-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
             display: block;
-            /* Um filtro sutil para garantir que a imagem case com o fundo escuro */
-            filter: brightness(0.9) contrast(1.1);
-            transition: transform 0.5s ease;
+            filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.2));
+            transition: transform 0.3s;
         }
 
-        /* Um efeito sutil se ela passar o mouse na imagem */
-        .gift-image-container:hover .gift-image {
-            transform: scale(1.03);
+        .option-card:hover .emoji-icon {
+            transform: scale(1.1) rotate(5deg);
         }
 
-        /* Estilo da Frase */
-        .message {
+        .card-title {
             font-family: 'Cinzel', serif;
-            color: #e1e8ed;
-            /* Um tom quase branco, prateado */
-            font-size: 22px;
-            line-height: 1.4;
-            font-weight: 400;
+            font-size: 18px;
+            color: #ecf0f1;
+            font-weight: bold;
             letter-spacing: 1px;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
         }
 
-        /* Animação de entrada (Mesma do login) */
+        .click-hint {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #95a5a6;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .option-card:hover .click-hint {
+            opacity: 1;
+        }
+
+        /* --- NOVA ÁREA DE SUGESTÃO --- */
+        .suggestion-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .suggestion-label {
+            color: #a4b0be;
+            font-size: 14px;
+            margin-bottom: 10px;
+            display: block;
+            font-family: 'Cinzel', serif;
+        }
+
+        .input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            border-bottom: 2px solid #4b6584;
+            color: #fff;
+            font-size: 14px;
+            font-family: 'Montserrat', sans-serif;
+            border-radius: 4px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-bottom: 2px solid #3498db;
+        }
+
+        .btn-send {
+            padding: 12px 20px;
+            background: linear-gradient(to right, #2980b9, #2c3e50);
+            border: none;
+            color: white;
+            font-family: 'Cinzel', serif;
+            font-size: 12px;
+            font-weight: bold;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(41, 128, 185, 0.4);
+        }
+
+        /* Animações */
         @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInUp {
             from {
                 opacity: 0;
                 transform: translateY(30px);
@@ -108,16 +207,67 @@
 
 <body>
 
-    <div class="surprise-card">
-        <div class="gift-image-container">
-            <img src="https://icons.iconarchive.com/icons/miniartx/gifts-2/256/rose-icon.png" alt="Flores e Chocolate"
-                class="gift-image">
-        </div>
+    <h1>24, víspera de Navidad. Hagamos algo bonito, permítete conocerme.</h1>
 
-        <p class="message">
-            Descansa, amanhã será um dia melhor.
-        </p>
+    <div class="cards-container">
+
+        <a href="https://wa.me/5589981043496?text=Oii%20Adorei%20a%20ideia%20escolho%20a%20Caminhada%20Costaneira"
+            class="option-card">
+            <span class="emoji-icon">🚶‍♂️</span>
+            <div class="card-title">Caminhada Costaneira</div>
+            <span class="click-hint">Clique para escolher</span>
+        </a>
+
+        <a href="https://wa.me/5589981043496?text=Oii%20Adorei%20a%20ideia%20escolho%20o%20Cinema%20Pop"
+            class="option-card">
+            <span class="emoji-icon">🍿</span>
+            <div class="card-title">Cinema Pop</div>
+            <span class="click-hint">Clique para escolher</span>
+        </a>
+
+        <a href="https://wa.me/5589981043496?text=Oii%20Adorei%20a%20ideia%20escolho%20Cozinhar%20Laceia"
+            class="option-card">
+            <span class="emoji-icon">🍳</span>
+            <div class="card-title">Cozinhar Laceia</div>
+            <span class="click-hint">Clique para escolher</span>
+        </a>
+
     </div>
+
+    <div class="suggestion-box">
+        <span class="suggestion-label">Ou sugira algo diferente...</span>
+        <div class="input-row">
+            <input type="text" id="customInput" placeholder="Ex: Jantar fora...">
+            <button class="btn-send" onclick="enviarSugestao()">Enviar</button>
+        </div>
+    </div>
+
+    <script>
+        function enviarSugestao() {
+            const inputVal = document.getElementById('customInput').value;
+
+            if (inputVal.trim() !== "") {
+                // Monta a mensagem sem emojis
+                const textoBase = "Oii tenho uma outra ideia: " + inputVal;
+
+                // Codifica para URL para garantir que espaços e acentos funcionem
+                const textoCodificado = encodeURIComponent(textoBase);
+
+                // Redireciona
+                window.location.href = `https://wa.me/5589981043496?text=${textoCodificado}`;
+            } else {
+                // Se ela tentar enviar vazio, dá um leve alerta visual (opcional)
+                document.getElementById('customInput').focus();
+            }
+        }
+
+        // Permitir enviar com Enter também
+        document.getElementById('customInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                enviarSugestao();
+            }
+        });
+    </script>
 
 </body>
 
